@@ -1,93 +1,92 @@
-CREATE DATABASE iubmdb;
-USE iubmdb;
+CREATE DATABASE IF NOT EXISTS imdb_webapp;
+USE imdb_webapp;
 
 CREATE TABLE users (
-    user_id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50) NOT NULL UNIQUE,
+    user_id INT(11) NOT NULL AUTO_INCREMENT,
+    username VARCHAR(100) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
-    full_name VARCHAR(100),
-    date_of_birth DATE,
-    role ENUM('admin', 'moderator', 'user') DEFAULT 'user',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+    password VARCHAR(255) NOT NULL,
+    is_admin BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE movies (
-    movie_id INT PRIMARY KEY AUTO_INCREMENT,
+    movie_id INT(11) NOT NULL AUTO_INCREMENT,
     title VARCHAR(255) NOT NULL,
-    release_year INT NOT NULL,
-    genre VARCHAR(100),
-    director VARCHAR(100),
-    description TEXT,
-    poster_url VARCHAR(255),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+    release_year YEAR NOT NULL,
+    genre VARCHAR(100) NOT NULL,
+    description TEXT NOT NULL,
+    director_id INT(11) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (movie_id),
+    FOREIGN KEY (director_id) REFERENCES directors(director_id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE directors (
+    director_id INT(11) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    birthdate DATE NOT NULL,
+    nationality VARCHAR(100) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (director_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE actors (
-    actor_id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
-    date_of_birth DATE,
-    nationality VARCHAR(50),
-    bio TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+    actor_id INT(11) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    birthdate DATE NOT NULL,
+    nationality VARCHAR(100) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (actor_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE movie_actors (
-    movie_id INT,
-    actor_id INT,
-    role_name VARCHAR(100),
+CREATE TABLE movie_cast (
+    movie_id INT(11) NOT NULL,
+    actor_id INT(11) NOT NULL,
+    role_name VARCHAR(255) NOT NULL,
     PRIMARY KEY (movie_id, actor_id),
     FOREIGN KEY (movie_id) REFERENCES movies(movie_id) ON DELETE CASCADE,
     FOREIGN KEY (actor_id) REFERENCES actors(actor_id) ON DELETE CASCADE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE reviews (
-    review_id INT PRIMARY KEY AUTO_INCREMENT,
-    movie_id INT,
-    user_id INT,
-    rating FLOAT CHECK (rating BETWEEN 0 AND 10),
-    review_text TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    review_id INT(11) NOT NULL AUTO_INCREMENT,
+    movie_id INT(11) NOT NULL,
+    user_id INT(11) NOT NULL,
+    rating DECIMAL(3,1) NOT NULL CHECK (rating BETWEEN 0 AND 10),
+    review_text TEXT NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (review_id),
     FOREIGN KEY (movie_id) REFERENCES movies(movie_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
-);
-
-CREATE TABLE watchlists (
-    watchlist_id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT,
-    movie_id INT,
-    added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (movie_id) REFERENCES movies(movie_id) ON DELETE CASCADE
-);
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE genres (
-    genre_id INT PRIMARY KEY AUTO_INCREMENT,
-    genre_name VARCHAR(50) NOT NULL UNIQUE
-);
+    genre_id INT(11) NOT NULL AUTO_INCREMENT,
+    genre_name VARCHAR(100) NOT NULL UNIQUE,
+    PRIMARY KEY (genre_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE movie_genres (
-    movie_id INT,
-    genre_id INT,
+    movie_id INT(11) NOT NULL,
+    genre_id INT(11) NOT NULL,
     PRIMARY KEY (movie_id, genre_id),
     FOREIGN KEY (movie_id) REFERENCES movies(movie_id) ON DELETE CASCADE,
     FOREIGN KEY (genre_id) REFERENCES genres(genre_id) ON DELETE CASCADE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE directors (
-    director_id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
-    date_of_birth DATE,
-    nationality VARCHAR(50),
-    bio TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE movie_directors (
-    movie_id INT,
-    director_id INT,
-    PRIMARY KEY (movie_id, director_id),
-    FOREIGN KEY (movie_id) REFERENCES movies(movie_id) ON DELETE CASCADE,
-    FOREIGN KEY (director_id) REFERENCES directors(director_id) ON DELETE CASCADE
-);
+CREATE TABLE watchlist (
+    watchlist_id INT(11) NOT NULL AUTO_INCREMENT,
+    user_id INT(11) NOT NULL,
+    movie_id INT(11) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (watchlist_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (movie_id) REFERENCES movies(movie_id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
