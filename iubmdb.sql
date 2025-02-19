@@ -90,3 +90,64 @@ CREATE TABLE watchlist (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (movie_id) REFERENCES movies(movie_id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
+
+INSERT INTO users (username, email, password, is_admin)
+VALUES
+('john_doe', 'john@example.com', 'password123', FALSE),
+('admin_user', 'admin@example.com', 'admin123', TRUE),
+('jane_doe', 'jane@example.com', 'jane123', FALSE);
+
+INSERT INTO directors (name, birthdate, nationality)
+VALUES
+('Steven Spielberg', '1946-12-18', 'American'),
+('Christopher Nolan', '1970-07-30', 'British-American'),
+('Quentin Tarantino', '1963-03-27', 'American');
+
+INSERT INTO actors (name, birthdate, nationality)
+VALUES
+('Leonardo DiCaprio', '1974-11-11', 'American'),
+('Morgan Freeman', '1937-06-01', 'American'),
+('Scarlett Johansson', '1984-11-22', 'American');
+
+INSERT INTO movies (title, release_year, genre, description, director_id)
+VALUES
+('Inception', 2010, 'Sci-Fi', 'A mind-bending thriller where thieves invade the subconscious.', 2),
+('The Dark Knight', 2008, 'Action', 'Batman battles the Joker in a chaotic Gotham City.', 2),
+('Pulp Fiction', 1994, 'Crime', 'A series of interconnected stories involving criminals and their mishaps.', 3);
+
+INSERT INTO movie_cast (movie_id, actor_id, role_name)
+VALUES
+(1, 1, 'Dom Cobb'),
+(2, 1, 'Jack Dawson'),
+(2, 2, 'Detective Joe'),
+(3, 1, 'Mia Wallace'),
+(3, 2, 'Jules Winnfield');
+
+INSERT INTO genres (genre_name)
+VALUES
+('Sci-Fi'),
+('Action'),
+('Crime'),
+('Thriller'),
+('Drama');
+
+INSERT INTO movie_genres (movie_id, genre_id)
+VALUES
+(1, 1),
+(2, 2),
+(3, 3);
+
+INSERT INTO watchlist (user_id, movie_id)
+VALUES
+(1, 1),
+(2, 2),
+(3, 3);
+
+INSERT INTO reviews (movie_id, user_id, rating, review_text)
+VALUES
+(1, 1, 9.0, 'Amazing movie with a complex and mind-bending plot.'),
+(2, 2, 10.0, 'Masterpiece! Heath Ledger as the Joker was incredible.'),
+(3, 3, 8.5, 'Great storytelling, with some unforgettable characters.');
