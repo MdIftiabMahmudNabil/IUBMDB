@@ -1,3 +1,6 @@
+USE iubmdb;
+SOURCE /docker-entrypoint-initdb.d/iubmdb.sql;
+
 CREATE DATABASE IF NOT EXISTS imdb_webapp;
 USE imdb_webapp;
 
