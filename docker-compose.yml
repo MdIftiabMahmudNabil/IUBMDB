@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: docker/apache/Dockerfile
     ports:
-      - "80:80"
+      - "8080:80"
     restart: always
     environment:
       DB_HOST: dpg-cv8nfman91rc7381r17g-a.oregon-postgres.render.com
