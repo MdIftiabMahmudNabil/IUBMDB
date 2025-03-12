@@ -2,11 +2,14 @@ version: '3.8'
 
 services:
   web:
-    build: ./docker/apache
-    container_name: iubmdb_web
+    build:
+      context: .
+      dockerfile: docker/apache/Dockerfile
     ports:
-      - "8080:80"
-    volumes:
-      - ./src:/var/www/html
+      - "80:80"
     restart: always
-    working_dir: /var/www/html
+    environment:
+      DB_HOST: dpg-cv8nfman91rc7381r17g-a.oregon-postgres.render.com
+      DB_NAME: iubmdb
+      DB_USER: iubuser
+      DB_PASS: CvexCKIHd4zOXb3jDz8eNJU1jL5002DZ
