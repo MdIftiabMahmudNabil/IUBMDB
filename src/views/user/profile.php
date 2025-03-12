@@ -41,7 +41,6 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 </head>
 <body class="bg-[#1C1F33] text-white min-h-screen">
 
-<!-- Header -->
 <header class="bg-[#1C1F33] shadow-md px-6 py-4 flex justify-between items-center">
   <div class="flex items-center gap-4">
     <img src="/assets/logo/IUBMDblogo.gif" alt="Logo" class="w-12 h-12 rounded-full">
@@ -75,7 +74,6 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
   </div>
 </header>
 
-<!-- Main Content -->
 <main class="p-8 max-w-2xl mx-auto">
   <h2 class="text-2xl font-semibold mb-6">Edit Profile</h2>
 
