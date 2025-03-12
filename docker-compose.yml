@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  web:
+    build: ./docker/apache
+    container_name: iubmdb_web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: iubmdb_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: iubmdb
+      MYSQL_USER: iubuser
+      MYSQL_PASSWORD: iubpass
+    ports:
+      - "4306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: iubmdb_phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_USER: iubuser
+      PMA_PASSWORD: iubpass
+    ports:
+      - "8081:80"
+
+volumes:
+  db_data:
