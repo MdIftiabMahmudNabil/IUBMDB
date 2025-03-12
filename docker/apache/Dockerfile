@@ -7,3 +7,5 @@ RUN apt-get update && apt-get install -y \
 RUN a2enmod rewrite
 
 COPY ./docker/apache/php.ini /usr/local/etc/php/
+
+COPY ./src/ /var/www/html/
