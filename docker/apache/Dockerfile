@@ -6,4 +6,4 @@ RUN apt-get update && apt-get install -y \
 
 RUN a2enmod rewrite
 
-COPY ./php.ini /usr/local/etc/php/
+COPY ./docker/apache/php.ini /usr/local/etc/php/
