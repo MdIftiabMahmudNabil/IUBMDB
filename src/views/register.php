@@ -4,9 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Register | IUBMDb</title>
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Theme & UI Enhancements -->
+  
   <script defer src="/assets/js/theme.js"></script>
   <style>
     video { object-fit: cover; }
@@ -21,7 +20,7 @@
 
   <div class="w-full max-w-6xl flex rounded-xl shadow-lg overflow-hidden fade-in" id="formContainer">
     
-    <!-- Video Section -->
+    
     <div class="w-1/2 relative cursor-pointer" onclick="switchVideo()">
       <video id="registerVideo" class="w-full h-full" autoplay muted loop preload="auto">
         <source src="/assets/signup-bg/scene1.mp4" type="video/mp4">
@@ -33,7 +32,7 @@
       </div>
     </div>
 
-    <!-- Registration Form -->
+    
     <div class="w-1/2 p-10 md:p-14 flex flex-col justify-center">
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-3xl font-bold">Create an account</h2>
@@ -93,7 +92,7 @@
     </div>
   </div>
 
-  <!-- Video switch script -->
+  
   <script>
     const videos = [
       {
