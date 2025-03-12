@@ -44,7 +44,7 @@ function getImageUrl($path, $size = 'w500') {
 </head>
 <body class="bg-[#0F172A] text-white min-h-screen px-6 py-10">
   <div class="max-w-6xl mx-auto space-y-10">
-    <!-- Movie Banner -->
+
     <div class="relative">
       <img src="<?php echo getImageUrl($movie['backdrop_path'], 'original'); ?>" class="w-full h-[500px] object-cover rounded-xl shadow-lg">
       <div class="absolute inset-0 bg-black/60 flex flex-col justify-end p-6 rounded-xl">
@@ -68,7 +68,7 @@ function getImageUrl($path, $size = 'w500') {
       </div>
     </div>
 
-    <!-- Trailer Modal -->
+
     <?php if ($trailerKey): ?>
       <div x-data="{ trailerOpen: false }" x-show="trailerOpen" style="display: none"
            class="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
@@ -81,7 +81,6 @@ function getImageUrl($path, $size = 'w500') {
       </div>
     <?php endif; ?>
 
-    <!-- Cast -->
     <div>
       <h2 class="text-2xl font-semibold mb-4">Top Cast</h2>
       <div class="grid grid-cols-2 sm:grid-cols-5 gap-6">
@@ -96,7 +95,7 @@ function getImageUrl($path, $size = 'w500') {
       </div>
     </div>
 
-    <!-- Similar Movies -->
+
     <div>
       <h2 class="text-2xl font-semibold mb-4">Recommended</h2>
       <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4">
