@@ -11,7 +11,7 @@ $stmt = $pdo->prepare("SELECT username, profile_picture FROM users WHERE id = ?"
 $stmt->execute([$user_id]);
 $user = $stmt->fetch();
 
-// TMDB API call
+
 $apiKey = '34addef368644c5b44f086432426b1d9';
 $tmdbUrl = "https://api.themoviedb.org/3/trending/movie/day?api_key=$apiKey";
 $response = file_get_contents($tmdbUrl);
@@ -42,7 +42,7 @@ $trendingMovies = json_decode($response, true)['results'];
 </head>
 <body class="text-white">
 
-<!-- Top Nav -->
+
 <header class="bg-[#0F172A] px-6 py-4 flex justify-between items-center border-b border-gray-600">
   <div class="flex items-center gap-4">
     <img src="/assets/logo/IUBMDblogo.gif" alt="IUBMDb Logo" class="w-10 h-10 rounded">
@@ -52,7 +52,7 @@ $trendingMovies = json_decode($response, true)['results'];
   <div class="flex items-center gap-6 relative">
     <a href="#" class="hover:underline">Watchlist</a>
     <div class="relative">
-      <!-- Profile dropdown toggle -->
+      
       <button id="profileToggle" class="flex items-center space-x-2 focus:outline-none">
         <img src="/assets/uploads/<?php echo htmlspecialchars($user['profile_picture']); ?>"
              alt="Profile" class="w-10 h-10 rounded-full border-2 border-yellow-500 object-cover">
@@ -63,7 +63,7 @@ $trendingMovies = json_decode($response, true)['results'];
         </svg>
       </button>
 
-      <!-- Dropdown menu -->
+    
       <div id="profileDropdown" class="absolute right-0 mt-2 w-48 bg-gray-800 text-white rounded-md shadow-lg hidden z-50">
         <a href="profile.php" class="block px-4 py-2 hover:bg-gray-700">Your profile</a>
         <a href="#" class="block px-4 py-2 hover:bg-gray-700">Your watchlist</a>
@@ -77,7 +77,7 @@ $trendingMovies = json_decode($response, true)['results'];
 </header>
 
 <main class="p-8">
-  <!-- Up Next -->
+
   <section class="mb-8">
     <h2 class="text-2xl text-yellow-400 font-bold mb-4">🔥 Up Next</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -97,7 +97,7 @@ $trendingMovies = json_decode($response, true)['results'];
     </div>
   </section>
 
-  <!-- Trending Grid -->
+
   <section>
     <h2 class="text-2xl text-yellow-400 font-bold mb-4">🎬 Trending Today</h2>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
